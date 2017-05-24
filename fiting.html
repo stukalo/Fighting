@@ -1,0 +1,38 @@
+<script>
+class Fighter{
+    constructor(name, power, helth = 100){
+        this.name = name;
+        this.power = power;
+        this.helth = helth;
+    }
+    setDamage(damage){
+        this.helth -= damage;
+        
+    }
+    hit(enemy, point = 1){
+        let damage = point * this.power;
+        enemy.setDamage(damage);
+    }
+}
+
+class ImprovedFighter extends Fighter{
+    doubleHit(enemy, point){
+        this.hit(enemy, 2 * point)
+    }
+}
+    
+function fight(fighter, improvedFighter, ...points){
+       while(fighter.health > 0 && improvedFighter.health > 0){
+           let p = points.pop();
+            fighter.hit(improvedFighter, p);
+            improvedFighter.hit(fighter, p);
+       }
+    let winner = (fighter.health > improvedFighter.health) ? fighter : improvedFighter;
+    console.log(`winner: ${winner.name}`);
+}
+    
+let f1 = new Fighter("Edik", 1);
+let f2 = new ImprovedFighter("Sasha", 1);
+fight(f1, f2, 1, 3, 5);
+
+</script>
